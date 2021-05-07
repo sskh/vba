@@ -1,0 +1,70 @@
+'Sergiy Synylo, 07.05.2021
+
+Option Explicit
+Sub dub()
+Dim ArtArray As Variant
+Dim ArtArray2 As Variant
+Dim Upper As Integer
+Dim Lower As Integer
+Dim Upper2 As Integer
+Dim Lower2 As Integer
+Dim i As Long
+Dim i2 As Long
+Dim ra1 As Long
+Dim ra2 As Long
+Dim r1 As Integer
+Dim r2 As Integer
+
+
+Dim temp1 As Variant
+Dim temp2 As Variant
+Dim a As Variant
+Dim arrMarks() As Long
+
+ArtArray = Application.Transpose(Application.Transpose(Worksheets(2).Range("A9:A1222")))
+
+Upper = UBound(ArtArray, 1)
+Lower = LBound(ArtArray, 1)
+
+ReDim arrMarks(Lower To Upper)
+
+For i = Lower To Upper
+arrMarks(i) = ArtArray(i, 1)
+Next i:
+
+For i = 1 To 9900000
+r1 = Int((Upper - 1 + Lower) * Rnd + Lower)
+r2 = Int((Upper - 1 + Lower) * Rnd + Lower)
+If r1 < r2 And arrMarks(r1) > arrMarks(r2) Then
+
+ra1 = arrMarks(r1)
+ra2 = arrMarks(r2)
+
+arrMarks(r1) = ra2
+arrMarks(r2) = ra1
+
+ElseIf r1 > r2 And arrMarks(r1) = arrMarks(r2) Then
+Else
+End If
+Next i:
+
+Upper2 = UBound(arrMarks)
+Lower2 = LBound(arrMarks)
+
+i2 = 1
+
+For i = Lower To Upper
+
+If i = Lower Then
+Worksheets(3).Cells(i2, 3) = arrMarks(i)
+i2 = i2 + 1
+
+ElseIf i > Lower And arrMarks(i) = arrMarks(i - 1) And i < Upper Then
+ElseIf i = Upper Then
+Worksheets(3).Cells(i2, 3) = arrMarks(i)
+Else
+Worksheets(3).Cells(i2, 3) = arrMarks(i)
+i2 = i2 + 1
+End If
+Next i:
+End Sub
